@@ -216,3 +216,13 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Healthcare Analytics Project
+data/raw/
+data/processed/
+
+# CSV data files
+*.csv
+
+# Local project files
+.vscode/
