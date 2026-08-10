@@ -1,4 +1,4 @@
-# (Python) Healthcare Data Cleaning Pipeline 
+# Python - Healthcare Data Cleaning Pipeline 
 
 A Python/pandas pipeline that takes raw synthetic healthcare data and produces
 analysis-ready, validated tables for downstream use in SQL Server and Power BI.
