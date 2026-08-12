@@ -12,29 +12,16 @@ An end-to-end healthcare analytics solution designed to ingest raw transactional
 
 ## 📸 Executive Dashboard Preview
 ```mermaid
+```mermaid
 flowchart LR
-    %% Custom Font and Node Styling
-    classDef largeNode fill:#161b22,stroke:#58a6ff,stroke-width:3px,color:#ffffff,font-size:16px,font-weight:bold;
-    classDef pythonNode fill:#161b22,stroke:#3fb950,stroke-width:3px,color:#ffffff,font-size:16px,font-weight:bold;
-    classDef sqlNode fill:#161b22,stroke:#f85149,stroke-width:3px,color:#ffffff,font-size:16px,font-weight:bold;
-    classDef viewNode fill:#161b22,stroke:#d29922,stroke-width:3px,color:#ffffff,font-size:16px,font-weight:bold;
-    classDef pbiNode fill:#161b22,stroke:#a371f7,stroke-width:3px,color:#ffffff,font-size:16px,font-weight:bold;
-
-    %% Nodes
-    A["📁 Raw Synthea Data<br/>(CSV Datasets)"]:::largeNode
-    B["🐍 Python ETL Pipeline<br/>(Pandas Data Cleaning)"]:::pythonNode
-    C["🛢️ SQL Server Database<br/>(HealthcareAnalytics_Numeric)"]:::sqlNode
-    D["👁️ SQL Analytical Views<br/>(vw_Claims, vw_Patient, vw_Dept)"]:::viewNode
-    E["📊 Power BI Dashboard<br/>(Star Schema & DAX)"]:::pbiNode
-
-    %% Links
-    A ==>|" Extract "| B
-    B ==>|" PyODBC Batching "| C
-    C ==>|" Transform "| D
-    D ==>|" Direct Import "| E
-
-    %% Link Styling
-    linkStyle default stroke:#58a6ff,stroke-width:3px,color:#f0f6fc,font-size:14px;
+    A["📁 Raw Synthea<br/>(CSV Datasets)"] --> B["🐍 Python ETL Pipeline<br/>(Pandas + Chunked Batching)"]
+    B --> C["🛢️ SQL Server Database<br/>(HealthcareAnalytics_Numeric)"]
+    C --> D["📊 Power BI Desktop<br/>(DAX & Interactive Dashboard)"]
+    
+    style A fill:#161b22,stroke:#30363d,color:#58a6ff
+    style B fill:#161b22,stroke:#30363d,color:#58a6ff
+    style C fill:#161b22,stroke:#30363d,color:#58a6ff
+    style D fill:#161b22,stroke:#30363d,color:#58a6ff
 ```
 
 
