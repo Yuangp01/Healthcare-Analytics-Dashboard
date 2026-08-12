@@ -8,16 +8,6 @@ Purpose:
 Load cleaned healthcare datasets produced by the Python
 data preparation pipeline into SQL Server.
 
-Source:
-data/processed/ (see ../python-data-cleaning)
-
-The CSV files are intentionally excluded from GitHub. Update
-@DataPath below to the local location of the processed CSV
-files before executing this script -- every load statement
-references it, so it only needs to change in one place.
-
-Prerequisite:
-scripts/01_create_tables.sql has been run.
 
 Load order (matches foreign key dependencies):
 1. Patients
