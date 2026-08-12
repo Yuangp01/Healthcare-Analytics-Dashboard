@@ -30,25 +30,33 @@ Build a scalable analytics solution that defines and tracks **North Star metrics
 
 ---
 
-# 🏗️ Data Architecture
+## 🏗️ Data Architecture & Engineering Pipeline
+
+The architecture is built to cleanly separate data extraction, storage, business logic, and presentation. By utilizing **Power Query** for heavy data cleaning and pushing multi-table joins downstream into SQL Server, the Power BI semantic model remains highly optimized and lightweight.
 
 ```mermaid
 flowchart LR
+    %% Styling
+    classDef raw fill:#161b22,stroke:#58a6ff,stroke-width:2px,color:#fff
+    classDef pq fill:#161b22,stroke:#217346,stroke-width:2px,color:#fff
+    classDef sql fill:#161b22,stroke:#cc2927,stroke-width:2px,color:#fff
+    classDef view fill:#161b22,stroke:#d29922,stroke-width:2px,color:#fff
+    classDef pbi fill:#161b22,stroke:#f2c811,stroke-width:2px,color:#fff
 
-    A[Raw Synthea CSVs] 
-        --> B[Power Query<br/>Extraction & Cleaning]
+    subgraph Ingestion ["📥 Extraction & Transformation"]
+        A["📁 Raw Synthea Data<br/>(CSV Exports)"]:::raw ==>|"Extract & Clean"| B["⚡ Power Query<br/>(Data Transformation & Type Casting)"]:::pq
+    end
 
-    B --> C[(SQL Server<br/>HealthcareAnalytics_Numeric)]
+    subgraph Database ["🛢️ SQL Server Relational Database (900k+ Records)"]
+        B ==>|"Load Base Tables"| C["💾 HealthcareAnalytics_Numeric<br/>(Procedures, Claims, Conditions, Encounters, Patients)"]:::sql
+        C ==>|"Financial Logic"| D1["👁️ vw_ClaimsSummary<br/>(Status Normalization)"]:::view
+        C ==>|"LEFT JOINs & Age Buckets"| D2["👁️ vw_PatientOverview<br/>(Dimensional Flattening)"]:::view
+        C ==>|"GROUP BY Rollups"| D3["👁️ vw_DepartmentalPerformance<br/>(Capacity Aggregation)"]:::view
+    end
 
-    C --> D1[dbo.vw_ClaimsSummary]
-    C --> D2[dbo.vw_PatientOverview]
-    C --> D3[dbo.vw_DepartmentalPerformance]
-
-    D1 --> E[Power BI<br/>Semantic Model]
-
-    D2 --> E
-    D3 --> E
-
-    E --> F[Star Schema]
+    subgraph BI ["📊 Business Intelligence Layer"]
+        D1 & D2 & D3 ==>|"Import Mode"| E["🌟 Power BI Semantic Model<br/>(Star Schema)"]:::pbi
+        E ==>|"DAX Measures"| F["📈 Executive Dashboard<br/>(North Star Metrics & KPIs)"]:::pbi
+    end
     F --> G[DAX Measures]
     G --> H[Executive Dashboard]
