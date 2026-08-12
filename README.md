@@ -1,40 +1,54 @@
-# 🏥 Healthcare Operations & Financial Analytics: Executive Dashboard
-> **An End-to-End Analytics Pipeline & Dimensional Data Model**
+# 🏥 Healthcare Operations Data Analytics
 
-![Python](https://img.shields.io/badge/Python-3.14-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![SQL Server](https://img.shields.io/badge/SQL%20Server-2022-CC292B?style=for-the-badge&logo=microsoftsqlserver&logoColor=white)
-![Power BI](https://img.shields.io/badge/Power%20BI-Desktop-F2C811?style=for-the-badge&logo=powerbi&logoColor=black)
-![Pandas](https://img.shields.io/badge/Pandas-ETL-150458?style=for-the-badge&logo=pandas&logoColor=white)
+[![Power BI](https://img.shields.io/badge/Power%20BI-Analytics-F2C811?logo=powerbi&logoColor=black)](https://powerbi.microsoft.com/)
+[![SQL Server](https://img.shields.io/badge/SQL%20Server-Database-CC2927?logo=microsoftsqlserver&logoColor=white)](https://www.microsoft.com/sql-server)
+[![Power Query](https://img.shields.io/badge/Power%20Query-ETL-217346?logo=microsoft&logoColor=white)](https://learn.microsoft.com/power-query/)
 
-An enterprise-grade healthcare analytics solution designed to process raw transactional medical records into actionable executive insights. This project demonstrates a complete data engineering and business intelligence workflow: ingesting 900,000+ records via a Python ETL pipeline, modeling the data in a SQL Server relational database, engineering a high-performance SQL presentation layer, and delivering interactive reporting through Power BI.
+> **Enterprise-style healthcare analytics solution designed to transform synthetic clinical and financial data into actionable operational intelligence.**
 
 ---
 
-## 🔬 Senior Data Analyst Perspective: Project Overview
+## 📌 Executive Summary
 
-From an analytical standpoint, raw healthcare claims and encounter data are inherently complex, nested, and prone to anomalies. The core objective of this project was not just to visualize data, but to establish a trusted, single source of truth for **healthcare operations and revenue cycle management**.
+This project demonstrates an end-to-end **Healthcare Operations Analytics** workflow designed around the business questions healthcare leaders need to answer:
 
-By decoupling the data transformation logic from the visualization layer, this architecture ensures high data integrity, scalable query performance, and strict dimensional modeling standards. 
+- Are patient admissions increasing or declining?
+- What is the current readmission rate?
+- How is mortality trending?
+- Which departments generate the highest claim volume?
+- Where are unpaid balances accumulating?
+- How does utilization vary across patient demographics?
+- What operational factors are associated with longer stays?
 
-### 🎯 North Star Metrics & Core KPIs
-The dashboard is anchored around key performance indicators designed to give hospital administrators immediate visibility into operational bottlenecks and financial health:
-* **Revenue Cycle North Star:** Total Outstanding Balance & Claim Settlement Rate (tracking the efficiency of the billing department).
-* **Operational Capacity:** Patient Encounters per Department & Length of Stay (LOS) distributions.
-* **Clinical Demographics:** Case mix by clinical category, active condition prevalence, and demographic utilization rates.
+The solution bridges the gap between **raw clinical data and executive decision-making** by combining a SQL Server presentation layer with a Power BI semantic model and KPI framework.
+
+### 🎯 Primary Objective
+
+Build a scalable analytics solution that defines and tracks **North Star metrics and core operational KPIs** across:
+
+**Patient Utilization → Clinical Operations → Revenue Cycle → Financial Performance**
 
 ---
 
-## 🏗️ Architecture & System Flow
+# 🏗️ Data Architecture
 
 ```mermaid
 flowchart LR
-    A["📁 Raw Synthea Data<br/><b>(CSV Exports)</b>"] ==>|"Extract, Profile & Clean"| B["🐍 Python ETL Pipeline<br/><b>(Pandas + PyODBC)</b>"]
-    B ==>|"Chunked Insert<br/>(50k rows/batch)"| C["🛢️ SQL Server Database<br/><b>(HealthcareAnalytics_Numeric)</b>"]
-    C ==>|"Business Logic<br/>& Multi-table Joins"| D["👁️ SQL Presentation Layer<br/><b>(Analytical Views)</b>"]
-    D ==>|"Direct Import<br/>via Power Query"| E["📊 Power BI Dashboard<br/><b>(Star Schema & DAX)</b>"]
 
-    style A fill:#161b22,stroke:#58a6ff,stroke-width:2px,color:#ffffff
-    style B fill:#161b22,stroke:#3fb950,stroke-width:2px,color:#ffffff
-    style C fill:#161b22,stroke:#f85149,stroke-width:2px,color:#ffffff
-    style D fill:#161b22,stroke:#d29922,stroke-width:2px,color:#ffffff
-    style E fill:#161b22,stroke:#a371f7,stroke-width:2px,color:#ffffff
+    A[Raw Synthea CSVs] 
+        --> B[Power Query<br/>Extraction & Cleaning]
+
+    B --> C[(SQL Server<br/>HealthcareAnalytics_Numeric)]
+
+    C --> D1[dbo.vw_ClaimsSummary]
+    C --> D2[dbo.vw_PatientOverview]
+    C --> D3[dbo.vw_DepartmentalPerformance]
+
+    D1 --> E[Power BI<br/>Semantic Model]
+
+    D2 --> E
+    D3 --> E
+
+    E --> F[Star Schema]
+    F --> G[DAX Measures]
+    G --> H[Executive Dashboard]
