@@ -1,41 +1,26 @@
-# 🏥 Healthcare Analytics & Claims Executive Dashboard
-> **End-to-End Healthcare Data Engineering & Business Intelligence Pipeline**
+# 🏥 Healthcare Analytics Pipeline & Executive Dashboard
 
 ![Python](https://img.shields.io/badge/Python-3.14-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![SQL Server](https://img.shields.io/badge/SQL%20Server-2022-CC292B?style=for-the-badge&logo=microsoftsqlserver&logoColor=white)
 ![Power BI](https://img.shields.io/badge/Power%20BI-Desktop-F2C811?style=for-the-badge&logo=powerbi&logoColor=black)
-![Pandas](https://img.shields.io/badge/Pandas-ETL-150458?style=for-the-badge&logo=pandas&logoColor=white)
 
-An enterprise-grade healthcare analytics solution processing raw transactional medical data through a **Python batching ETL pipeline**, storing it in **SQL Server**, transforming it via **custom SQL Views**, and rendering interactive insights in **Power BI**.
-
----
-
-## ⚡ Key Project Highlights (For Recruiters)
-* **913K+ Total Records Ingested:** Built a robust Python ETL pipeline using `pandas` and `pyodbc` to clean, type-cast, and batch-load 900,000+ rows into SQL Server.
-* **Batch Loading Optimization:** Solved driver memory limits by executing chunked insertion batches of **50,000 rows/batch**.
-* **High-Performance SQL Layer:** Engineered **3 dedicated SQL Views** to handle multi-table joins (`LEFT JOIN`), age bucketing (`DATEDIFF`), and financial aggregations inside SQL Server rather than overloading Power BI.
+An end-to-end data engineering and analytics pipeline processing **900,000+ medical records** from raw CSV exports into an optimized **SQL Server database**, featuring **custom analytical views** and an interactive **Power BI executive dashboard**.
 
 ---
 
-## 📸 Executive Dashboard Preview
+## ⚡ Executive Summary
 
-| **Executive Overview** | **Patient Demographics** |
-| :---: | :---: |
-| ![Executive Overview](https://via.placeholder.com/600x350.png?text=Add+Executive+Overview+Screenshot) | ![Patient Demographics](https://via.placeholder.com/600x350.png?text=Add+Demographics+Screenshot) |
+* **Scalable Data Ingestion:** Built a Python ETL pipeline using `pandas` and `pyodbc` to clean, type-cast, and load 900,000+ records.
+* **Performance Optimization:** Implemented **50,000-row chunked batch loading** to eliminate database memory bottlenecks and driver crashes.
+* **SQL Analytics Layer:** Shifted multi-table joins and age-group logic away from Power BI directly onto SQL Server via **3 pre-aggregated Views**.
 
 ---
 
-## 🏗️ Architecture & System Flow
+## 🏗️ Architecture
 
 ```mermaid
 flowchart LR
-    A["📁 Raw Synthea Data<br/><b>(CSV Exports)</b>"] ==>|"Extract & Clean"| B["🐍 Python ETL Pipeline<br/><b>(Pandas + PyODBC Batching)</b>"]
-    B ==>|"Chunked Insert<br/>(50k rows/batch)"| C["🛢️ SQL Server Database<br/><b>(HealthcareAnalytics_Numeric)</b>"]
-    C ==>|"Business Logic<br/>& Joins"| D["👁️ SQL Analytical Views<br/><b>(vw_Claims, vw_Patient, vw_Dept)</b>"]
-    D ==>|"Direct Import"| E["📊 Power BI Dashboard<br/><b>(Star Schema & DAX)</b>"]
-
-    style A fill:#161b22,stroke:#58a6ff,stroke-width:2px,color:#ffffff
-    style B fill:#161b22,stroke:#3fb950,stroke-width:2px,color:#ffffff
-    style C fill:#161b22,stroke:#f85149,stroke-width:2px,color:#ffffff
-    style D fill:#161b22,stroke:#d29922,stroke-width:2px,color:#ffffff
-    style E fill:#161b22,stroke:#a371f7,stroke-width:2px,color:#ffffff
+    A["📁 Raw Synthea CSVs"] --> B["🐍 Python ETL<br/><i>(Cleaning & 50k Batch Loading)</i>"]
+    B --> C["🛢️ SQL Server<br/><i>(900k+ Records)</i>"]
+    C --> D["👁️ SQL Analytical Views<br/><i>(Pre-aggregated Logic)</i>"]
+    D --> E["📊 Power BI<br/><i>(Executive Dashboard)</i>"]
