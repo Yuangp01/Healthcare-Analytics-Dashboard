@@ -1,10 +1,11 @@
 # 🏥 Healthcare Operations Data Analytics
 
+[![Python](https://img.shields.io/badge/Python-Scripting-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![Power BI](https://img.shields.io/badge/Power%20BI-Analytics-F2C811?logo=powerbi&logoColor=black)](https://powerbi.microsoft.com/)
 [![SQL Server](https://img.shields.io/badge/SQL%20Server-Database-CC2927?logo=microsoftsqlserver&logoColor=white)](https://www.microsoft.com/sql-server)
 [![Power Query](https://img.shields.io/badge/Power%20Query-ETL-217346?logo=microsoft&logoColor=white)](https://learn.microsoft.com/power-query/)
 
-> **Enterprise-style healthcare analytics solution designed to transform synthetic clinical and financial data into actionable operational intelligence.**
+> **Transforming 900,000+ raw medical records into a high-performance executive dashboard to track clinical capacity and revenue cycle KPIs.**
 
 ---
 
