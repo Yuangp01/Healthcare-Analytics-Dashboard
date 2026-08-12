@@ -95,12 +95,11 @@ This project uses **[Synthea](https://synthea.mitre.org/)**, an open-source synt
 
 ## 🔍 Methodology
 
-1. **Extraction** — Raw Synthea CSVs (patients, encounters, conditions, procedures, payers, claims) ingested via Power Query.
-2. **Cleaning & Standardization** — Data typing, null handling, deduplication, and date normalization performed in Power Query / Python.
+1. **Extraction** — Raw Synthea CSVs (patients, encounters, conditions, procedures, claims) ingested via Power Query.
+2. **Cleaning & Standardization** — Data typing, null handling, and date normalization performed in Power Query / Python.
 3. **Loading** — Cleaned tables loaded into SQL Server (`HealthcareAnalytics_Numeric`).
 4. **Business Logic Layer** — T-SQL views built to encapsulate reusable logic: claims financials, patient-level rollups, and departmental capacity metrics.
-5. **Modeling** — Star schema built in Power BI with fact/dimension separation; DAX measures written for KPIs, YoY trends, and rate calculations (e.g., readmission rate, mortality rate).
-6. **Delivery** — Executive dashboard published with drill-through and filtering by department, payer, and demographic segment.
+5. **Modeling** — Star schema built in Power BI with fact/dimension separation; DAX measures written for KPIs.
 
 ---
 
