@@ -1,73 +1,62 @@
-# Healthcare Admissions Executive Dashboard
+# 🏥 Healthcare Analytics & Claims Executive Dashboard
+> **An End-to-End Healthcare Data Engineering & Business Intelligence Pipeline**
 
-An end-to-end healthcare analytics project: synthetic patient data → Python data
-cleaning pipeline → dimensional SQL/Power BI model → executive dashboard.
+![Python](https://img.shields.io/badge/Python-3.14-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![SQL Server](https://img.shields.io/badge/SQL%20Server-2022-CC292B?style=for-the-badge&logo=microsoftsqlserver&logoColor=white)
+![Power BI](https://img.shields.io/badge/Power%20BI-Desktop-F2C811?style=for-the-badge&logo=powerbi&logoColor=black)
+![Pandas](https://img.shields.io/badge/Pandas-ETL-150458?style=for-the-badge&logo=pandas&logoColor=white)
 
-**Stack:** Python (pandas) · Power BI · DAX · Power Query · Dimensional modeling (star schema)
+An end-to-end healthcare analytics solution designed to ingest raw transactional healthcare data, process and clean it via a **Python batching pipeline**, store it in a relational **SQL Server** database, model it using **custom SQL Analytical Views**, and deliver executive insights in **Power BI**.
 
-## Data
+---
 
-Built on [Synthea](https://synthetichealth.github.io/synthea/) — MITRE's open-source
-synthetic patient generator. All patients, encounters, conditions, and claims are
-fully synthetic; no real patient data is used anywhere in this project.
+## 📸 Executive Dashboard Preview
 
-## Pipeline
+| **Page 1: Executive Overview** | **Page 2: Patient Demographics** |
+| :---: | :---: |
+| ![Executive Overview Dashboard](https://via.placeholder.com/600x350.png?text=Add+Executive+Overview+Screenshot+Here) | ![Patient Demographics Dashboard](https://via.placeholder.com/600x350.png?text=Add+Patient+Demographics+Screenshot+Here) |
 
-`notebooks/01_data_cleaning.ipynb` takes the raw Synthea CSV export and produces
-an analysis-ready set of tables:
+| **Page 3: Clinical & Operations** | **Data Model Architecture** |
+| :---: | :---: |
+| ![Clinical Operations Dashboard](https://via.placeholder.com/600x350.png?text=Add+Clinical+Operations+Screenshot+Here) | ![Power BI Star Schema](https://via.placeholder.com/600x350.png?text=Add+Power+BI+Model+Screenshot+Here) |
 
-| Step | What happens |
-|---|---|
-| Load | Read each raw Synthea table |
-| Profile | Row/column counts, duplicates, missingness |
-| Clean | Type conversion, derived columns, category standardization |
-| Validate | Assertions on keys, date logic, and financial values before export |
-| Export | Write to `data/processed/` |
+*(💡 **Tip:** Replace the placeholder links above with actual image URLs once committed to your repo!)*
 
-**Dimension tables** (`patients`, `providers`, `organizations`, `payers`) are cleaned
-and exported at full scope. **Fact tables** (`encounters`, `conditions`, `procedures`,
-`claims`, `claims_transactions`) are cleaned at full scope first, then a single
-consistent `2020-2022` reporting window is applied identically across all of them —
-so every fact table in the Power BI model describes the same period.
 
-## Data Model
+┌─────────────────┐       ┌───────────────────────────┐       ┌───────────────────────────────┐       ┌───────────────────────────┐
+│   Raw Synthea   │  ──►  │    Python ETL Pipeline    │  ──►  │    SQL Server Database        │  ──►  │     Power BI Desktop      │
+│   (CSV Datasets)│       │  (Pandas + Chunked Batch) │       │ (HealthcareAnalytics_Numeric) │       │ (DAX & Interactive Report)│
+└─────────────────┘       └───────────────────────────┘       └───────────────────────────────┘       └───────────────────────────┘
 
-Star schema centered on `FactAdmissions` (derived from `encounters`), with
-`DimPatient`, `DimProvider`, `DimOrganization`, `DimPayer`, and `DimDate` as
-surrounding dimensions. `DimDate` uses role-playing relationships to `AdmissionDate`,
-`DischargeDate`, and `DeathDate` — the discharge/death paths are modeled as inactive
-relationships, activated in DAX via `USERELATIONSHIP` where needed.
+### 1. Data Ingestion & Batch Pipeline (`python/`)
+* **Source:** Synthea™ open-source synthetic medical dataset (free of HIPAA/PII constraints).
+* **Processing:** Handles complex type conversion, string truncation checks, and null values for large tables using `pandas` and `pyodbc`.
+* **Performance Optimization:** Uses **chunked batching (50,000 rows/batch)** to safely load sub-million row tables directly into SQL Server without driver buffer overflows or memory bottlenecks.
 
-## Dashboard
+### 2. SQL Server Relational Database (`sql/`)
+Database: **`HealthcareAnalytics_Numeric`**
 
-Three pages:
-1. **Executive Overview** — admissions volume, readmission rate, length of stay, mortality rate, financial summary
-2. **Patient & Demographics** — age, gender, ethnicity, marital status
-3. **Clinical & Operations** — length-of-stay distribution, admission source/disposition, case mix by clinical category
+| Table Name | Record Count | Description |
+| :--- | :---: | :--- |
+| **`dbo.Procedures`** | `460,244` | Clinical procedures and interventions executed during visits |
+| **`dbo.Claims`** | `310,474` | Financial billing records, primary/secondary claim statuses, and balances |
+| **`dbo.Conditions`** | `102,851` | Patient medical diagnoses and active clinical conditions |
+| **`dbo.Encounters`** | `37,289` | Patient hospital visits, stay durations, and encounters |
+| **`dbo.Patients`** | `2,868` | Demographic profiles, location details, and birth dates |
 
-## Repository structure
+---
 
-```
-notebooks/
-  01_data_cleaning.ipynb
-data/
-  raw/            (not committed — see Setup)
-  processed/      (not committed — generated by the notebook)
-powerbi/
-  admissions_dashboard.pbix
-README.md
-```
+## 🗄️ SQL Presentation Layer (Analytical Views)
 
-## Setup
+Rather than connecting Power BI directly to high-volume transactional tables, **3 SQL Analytical Views** were constructed directly inside SQL Server. This reduces memory overhead in Power BI and centralizes business logic within the database.
 
-1. Generate a Synthea population (see Synthea's own docs) and export as CSV.
-2. Place the raw CSVs in `data/raw/`.
-3. Run `notebooks/01_data_cleaning.ipynb` top to bottom.
-4. Open `powerbi/admissions_dashboard.pbix` and point Power Query at `data/processed/`.
+```sql
+-- View Architecture Overview
+├── dbo.vw_ClaimsSummary             --> Formats billing statuses & calculates outstanding vs settled balances
+├── dbo.vw_PatientOverview           --> Joins Patients + Encounters + Conditions into 1 row per patient with age groups
+└── dbo.vw_DepartmentalPerformance  --> Aggregates monthly claim counts, unique patient counts, & outstanding balances
 
-## Notes on data limitations
 
-Synthea generates statistically representative but synthetic clinical and financial
-data. Findings in this project are illustrative of the analytics approach, not
-real-world epidemiological or financial claims.
+---
 
+## 🏗️ Architecture & Data Pipeline Flow
