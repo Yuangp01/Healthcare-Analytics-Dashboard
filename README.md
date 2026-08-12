@@ -29,26 +29,30 @@ Build a scalable analytics solution that defines and tracks **North Star metrics
 **Patient Utilization → Clinical Operations → Revenue Cycle → Financial Performance**
 
 ---
-
-# 🏗️ Data Architecture
-
 ```mermaid
-flowchart LR
+flowchart TB
+    %% Custom Styling for Large, Readable Text
+    classDef raw fill:#161b22,stroke:#58a6ff,stroke-width:3px,color:#fff,font-size:16px,font-weight:bold
+    classDef pq fill:#161b22,stroke:#217346,stroke-width:3px,color:#fff,font-size:16px,font-weight:bold
+    classDef sql fill:#161b22,stroke:#cc2927,stroke-width:3px,color:#fff,font-size:16px,font-weight:bold
+    classDef view fill:#161b22,stroke:#d29922,stroke-width:3px,color:#fff,font-size:16px,font-weight:bold
+    classDef pbi fill:#161b22,stroke:#f2c811,stroke-width:3px,color:#fff,font-size:16px,font-weight:bold
+    classDef dash fill:#161b22,stroke:#a371f7,stroke-width:3px,color:#fff,font-size:18px,font-weight:bold
 
-    A[Raw Synthea CSVs] 
-        --> B[Power Query<br/>Extraction & Cleaning]
+    %% Nodes and Flow
+    A["📁 Raw Synthea CSVs"]:::raw ==>|"Extract & Clean"| B["⚡ Power Query"]:::pq
+    
+    B ==>|"Load Base Tables"| C[("🛢️ SQL Server Database<br/>(HealthcareAnalytics_Numeric)")]:::sql
+    
+    C ==>|"Financial Logic"| D1["👁️ dbo.vw_ClaimsSummary"]:::view
+    C ==>|"Dimensional Flattening"| D2["👁️ dbo.vw_PatientOverview"]:::view
+    C ==>|"Capacity Rollups"| D3["👁️ dbo.vw_DepartmentalPerformance"]:::view
+    
+    D1 ==>|"Import Mode"| E["🌟 Power BI Semantic Model<br/>(Star Schema & DAX Measures)"]:::pbi
+    D2 ==> E
+    D3 ==> E
+    
+    E ==> F["📈 Executive Dashboard"]:::dash
 
-    B --> C[(SQL Server<br/>HealthcareAnalytics_Numeric)]
-
-    C --> D1[dbo.vw_ClaimsSummary]
-    C --> D2[dbo.vw_PatientOverview]
-    C --> D3[dbo.vw_DepartmentalPerformance]
-
-    D1 --> E[Power BI<br/>Semantic Model]
-
-    D2 --> E
-    D3 --> E
-
-    E --> F[Star Schema]
-    F --> G[DAX Measures]
-    G --> H[Executive Dashboard]
+    %% Link Styling
+    linkStyle default stroke:#8b949e,stroke-width:3px,color:#c9d1d9,font-size:14px,font-weight:bold;
