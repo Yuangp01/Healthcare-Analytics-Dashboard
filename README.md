@@ -23,7 +23,6 @@
 - [Key KPIs Tracked](#-key-kpis-tracked)
 - [Key Findings](#-key-findings)
 - [Dashboard Preview](#-dashboard-preview)
-- [Repository Structure](#-repository-structure)
 - [Skills Demonstrated](#-skills-demonstrated)
 - [Future Improvements](#-future-improvements)
 - [About Me](#-about-me)
@@ -137,19 +136,7 @@ This project uses **[Synthea](https://synthea.mitre.org/)**, an open-source synt
 ## 📂 Repository Structure
 
 ```
-├── data/
-│   └── raw/                  # Synthea source CSVs (or download instructions)
-├── sql/
-│   ├── views/                # vw_ClaimsSummary.sql, vw_PatientOverview.sql, etc.
-│   └── schema.sql
-├── etl/
-│   └── power_query_scripts/  # or python cleaning scripts
-├── powerbi/
-│   └── HealthcareAnalytics.pbix
-├── assets/
-│   └── screenshots/
-├── README.md
-└── LICENSE
+
 ```
 
 ---
