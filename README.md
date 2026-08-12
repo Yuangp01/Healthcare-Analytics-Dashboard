@@ -12,13 +12,8 @@ An end-to-end healthcare analytics solution designed to ingest raw transactional
 
 ## 📸 Executive Dashboard Preview
 
-| **Page 1: Executive Overview** | **Page 2: Patient Demographics** |
-| :---: | :---: |
-| ![Executive Overview Dashboard](https://via.placeholder.com/600x350.png?text=Add+Executive+Overview+Screenshot+Here) | ![Patient Demographics Dashboard](https://via.placeholder.com/600x350.png?text=Add+Patient+Demographics+Screenshot+Here) |
 
-| **Page 3: Clinical & Operations** | **Data Model Architecture** |
-| :---: | :---: |
-| ![Clinical Operations Dashboard](https://via.placeholder.com/600x350.png?text=Add+Clinical+Operations+Screenshot+Here) | ![Power BI Star Schema](https://via.placeholder.com/600x350.png?text=Add+Power+BI+Model+Screenshot+Here) |
+
 
 *(💡 **Tip:** Replace the placeholder links above with actual image URLs once committed to your repo!)*
 
