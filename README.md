@@ -23,9 +23,7 @@
 - [Key KPIs Tracked](#-key-kpis-tracked)
 - [Key Findings](#-key-findings)
 - [Dashboard Preview](#-dashboard-preview)
-- [Skills Demonstrated](#-skills-demonstrated)
 - [Future Improvements](#-future-improvements)
-- [About Me](#-about-me)
 
 ---
 
@@ -136,10 +134,6 @@ This project uses **[Synthea](https://synthea.mitre.org/)**, an open-source synt
 
 ---
 
-## 🧠 Skills Demonstrated
-
-`SQL (views, joins, aggregation)` · `Data modeling (star schema)` · `DAX` · `ETL / Power Query` · `Python (pandas)` · `Healthcare KPI design` · `Dashboard/UX design for executive audiences`
-
 ## 🚀 Future Improvements
 
 - Automate the refresh pipeline (e.g., scheduled SQL Agent job or Python script)
@@ -149,8 +143,3 @@ This project uses **[Synthea](https://synthea.mitre.org/)**, an open-source synt
 
 ---
 
-## 👤 About Me
-
-**[Your Name]** — Data Analyst | [LinkedIn](#) | [Portfolio](#) | [Email](#)
-
-*If you're a recruiter reviewing this: I'm happy to walk through the SQL views, the DAX measures, or the design decisions behind this dashboard — reach out anytime.*
