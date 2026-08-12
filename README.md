@@ -12,7 +12,17 @@ An end-to-end healthcare analytics solution designed to ingest raw transactional
 
 ## 📸 Executive Dashboard Preview
 
-
+```mermaid
+flowchart LR
+    A["📁 Raw Synthea<br/>(CSV Datasets)"] --> B["🐍 Python ETL Pipeline<br/>(Pandas + Chunked Batching)"]
+    B --> C["🛢️ SQL Server Database<br/>(HealthcareAnalytics_Numeric)"]
+    C --> D["📊 Power BI Desktop<br/>(DAX & Interactive Dashboard)"]
+    
+    style A fill:#161b22,stroke:#30363d,color:#58a6ff
+    style B fill:#161b22,stroke:#30363d,color:#58a6ff
+    style C fill:#161b22,stroke:#30363d,color:#58a6ff
+    style D fill:#161b22,stroke:#30363d,color:#58a6ff
+```
 
 
 *(💡 **Tip:** Replace the placeholder links above with actual image URLs once committed to your repo!)*
