@@ -42,7 +42,7 @@ flowchart TB
     %% Nodes and Flow
     A["📁 Raw Synthea CSVs"]:::raw ==>|"Extract & Clean"| B["⚡ Power Query"]:::pq
     
-    B ==>|"Load Base Tables"| C[("🛢️ SQL Server Database<br/>(HealthcareAnalytics_Numeric)")]:::sql
+    B ==>|"Load Base Tables"| C[("SQL Server Database<br/>(HealthcareAnalytics_Numeric)")]:::sql
     
     C ==>|"Financial Logic"| D1[" dbo.vw_ClaimsSummary"]:::view
     C ==>|"Dimensional Flattening"| D2[" dbo.vw_PatientOverview"]:::view
