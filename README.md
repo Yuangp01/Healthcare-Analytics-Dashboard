@@ -12,17 +12,16 @@
 
 ---
 
-## 📌 Table of Contents
+## 🔍 Quick Navigation
 
-- [Business Problem](#-business-problem)
-- [Project Objective](#-project-objective)
-- [Architecture](#-architecture)
-- [Tech Stack](#-tech-stack)
-- [Data Source](#-data-source)
-- [Methodology](#-methodology)
-- [Key KPIs Tracked](#-key-kpis-tracked)
-- [Key Findings](#-key-findings)
-- [Dashboard Preview](#-dashboard-preview)
+> #### 📌 **Overview**
+> [Business Problem](#-business-problem) • [Project Objective](#-project-objective) • [Architecture](#-architecture)
+
+> #### ⚙️ **Technical Build**
+> [Tech Stack](#-tech-stack) • [Data Source](#-data-source) • [Methodology](#-methodology)
+
+> #### 📈 **Results & Insights**
+> [Key KPIs Tracked](#-key-kpis-tracked) • [Key Findings](#-key-findings) • [Dashboard Preview](#-dashboard-preview)
 
 ---
 
@@ -95,10 +94,10 @@ This project uses **[Synthea](https://synthea.mitre.org/)**, an open-source synt
 
 ---
 
-## 🔍 Methodology
+## 🧪 Methodology
 
 1. **Extraction** — Raw Synthea CSVs (patients, encounters, conditions, procedures, claims) ingested via Power Query.
-2. **Cleaning & Standardization** — Data typing, null handling, and date normalization performed in Power Query / Python.
+2. **Cleaning & Standardization** — Data typing, null handling, and date normalization performed in Python.
 3. **Loading** — Cleaned tables loaded into SQL Server (`HealthcareAnalytics_Numeric`).
 4. **Business Logic Layer** — T-SQL views built to encapsulate reusable logic: claims financials, patient-level rollups, and departmental capacity metrics.
 5. **Modeling** — Star schema built in Power BI with fact/dimension separation; DAX measures written for KPIs.
