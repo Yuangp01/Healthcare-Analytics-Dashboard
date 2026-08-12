@@ -8,19 +8,18 @@
 ---
 
 ## 🚀 Executive Summary  
-This project demonstrates an **end‑to‑end healthcare analytics architecture** built to showcase enterprise engineering capabilities: scalable ETL, dimensional modeling, SQL analytical views, and Power BI semantic modeling aligned to **North Star operational metrics**.
+This project showcases a **full-stack healthcare analytics architecture** designed to demonstrate mastery in:
 
-All data originates from **Synthea**, MITRE’s open‑source synthetic patient generator.  
-> **Disclaimer:** *100% of the data used in this project is synthetic and contains **zero** real PHI.*
+- Enterprise ETL engineering  
+- SQL Server analytical modeling  
+- Dimensional modeling (Star Schema)  
+- Power BI KPI development for operational intelligence  
+
+The platform transforms raw Synthea data into a **high-performance semantic model** capable of tracking mission-critical **North Star healthcare metrics** such as admissions, readmissions, mortality, and financial outcomes.
+
+> **Disclaimer:** All data is generated using **Synthea**, MITRE’s open-source synthetic patient generator.  
+> **100% synthetic. Zero real PHI.**
 
 ---
 
-## 🏗️ System Architecture  
-A clean, modern flow of the full data lifecycle — from raw CSVs to BI-ready star schema.
-
-```mermaid
-flowchart LR
-    A[Raw Synthea CSVs] --> B[Power Query<br/>Extraction & Cleaning]
-    B --> C[SQL Server<br/>Base Tables]
-    C --> D[SQL Analytical Views]
-    D --> E[Power BI<br/>Semantic Model (Star Schema)]
+## 🏗️ System
