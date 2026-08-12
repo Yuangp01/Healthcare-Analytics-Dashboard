@@ -23,7 +23,6 @@
 - [Key KPIs Tracked](#-key-kpis-tracked)
 - [Key Findings](#-key-findings)
 - [Dashboard Preview](#-dashboard-preview)
-- [Future Improvements](#-future-improvements)
 
 ---
 
@@ -40,6 +39,8 @@ Healthcare leaders sit on enormous volumes of clinical and financial data, but r
 - What operational factors are associated with longer length of stay?
 
 The solution bridges raw clinical data and executive decision-making by combining a **SQL Server presentation layer** with a **Power BI semantic model and KPI framework** — mirroring how analytics teams operate in real healthcare organizations.
+
+---
 
 ## 🎯 Project Objective
 
@@ -73,7 +74,6 @@ flowchart TB
     linkStyle default stroke:#8b949e,stroke-width:3px,color:#c9d1d9,font-size:14px,font-weight:bold;
 ```
 
-
 ---
 
 ## 🛠 Tech Stack
@@ -87,9 +87,13 @@ flowchart TB
 | Visualization | Power BI Desktop / Service |
 | Version Control | Git / GitHub |
 
+---
+
 ## 🗃 Data Source
 
 This project uses **[Synthea](https://synthea.mitre.org/)**, an open-source synthetic patient generator developed by MITRE. All 900,000+ records are **artificially generated** — there is no real patient data (PHI) involved, which makes the dataset safe to publish and analyze publicly while still modeling realistic clinical and claims patterns (admissions, encounters, conditions, procedures, claims).
+
+---
 
 ## 🔍 Methodology
 
@@ -131,15 +135,4 @@ This project uses **[Synthea](https://synthea.mitre.org/)**, an open-source synt
 ```
 
 ```
-
----
-
-## 🚀 Future Improvements
-
-- Automate the refresh pipeline (e.g., scheduled SQL Agent job or Python script)
-- Add row-level security by department/role
-- Incorporate predictive readmission risk scoring
-- Add cost-per-case analysis
-
----
 
