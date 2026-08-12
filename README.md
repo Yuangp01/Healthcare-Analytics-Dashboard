@@ -1,17 +1,39 @@
 # 🏥 Healthcare Operations Data Analytics
 
 [![Python](https://img.shields.io/badge/Python-Scripting-3776AB?logo=python&logoColor=white)](https://www.python.org/)
-[![Power BI](https://img.shields.io/badge/Power%20BI-Analytics-F2C811?logo=powerbi&logoColor=black)](https://powerbi.microsoft.com/)
 [![SQL Server](https://img.shields.io/badge/SQL%20Server-Database-CC2927?logo=microsoftsqlserver&logoColor=white)](https://www.microsoft.com/sql-server)
 [![Power Query](https://img.shields.io/badge/Power%20Query-ETL-217346?logo=microsoft&logoColor=white)](https://learn.microsoft.com/power-query/)
+[![Power BI](https://img.shields.io/badge/Power%20BI-Analytics-F2C811?logo=powerbi&logoColor=black)](https://powerbi.microsoft.com/)
+[![DAX](https://img.shields.io/badge/DAX-Data%20Modeling-blue)](https://learn.microsoft.com/dax/)
+[![License](https://img.shields.io/badge/License-MIT-lightgrey)](LICENSE)
 
-> **Transforming 900,000+ raw medical records into a high-performance executive dashboard to track clinical capacity and revenue cycle KPIs.**
+> **Transforming 900,000+ synthetic patient records into an executive dashboard that tracks clinical capacity and revenue cycle KPIs — built on a SQL Server presentation layer and a Power BI semantic model.**
+
+**[▶ Live Dashboard](#)** &nbsp;·&nbsp; **[📄 Full Case Study / Portfolio Write-up](#)** &nbsp;·&nbsp; **[📊 Sample Screenshots](#dashboard-preview)**
 
 ---
 
-## 📌 Executive Summary
+## 📌 Table of Contents
 
-This project demonstrates an end-to-end **Healthcare Operations Analytics** workflow designed around the business questions healthcare leaders need to answer:
+- [Business Problem](#-business-problem)
+- [Project Objective](#-project-objective)
+- [Architecture](#-architecture)
+- [Tech Stack](#-tech-stack)
+- [Data Source](#-data-source)
+- [Methodology](#-methodology)
+- [Key KPIs Tracked](#-key-kpis-tracked)
+- [Key Findings](#-key-findings)
+- [Dashboard Preview](#-dashboard-preview)
+- [Repository Structure](#-repository-structure)
+- [Skills Demonstrated](#-skills-demonstrated)
+- [Future Improvements](#-future-improvements)
+- [About Me](#-about-me)
+
+---
+
+## 📌 Business Problem
+
+Healthcare leaders sit on enormous volumes of clinical and financial data, but rarely have a single, governed source of truth to answer basic operational questions in real time. This project simulates the analytics function of a hospital system, built around the questions executives actually ask:
 
 - Are patient admissions increasing or declining?
 - What is the current readmission rate?
@@ -19,20 +41,22 @@ This project demonstrates an end-to-end **Healthcare Operations Analytics** work
 - Which departments generate the highest claim volume?
 - Where are unpaid balances accumulating?
 - How does utilization vary across patient demographics?
-- What operational factors are associated with longer stays?
+- What operational factors are associated with longer length of stay?
 
-The solution bridges the gap between **raw clinical data and executive decision-making** by combining a SQL Server presentation layer with a Power BI semantic model and KPI framework.
+The solution bridges raw clinical data and executive decision-making by combining a **SQL Server presentation layer** with a **Power BI semantic model and KPI framework** — mirroring how analytics teams operate in real healthcare organizations.
 
-### 🎯 Primary Objective
+## 🎯 Project Objective
 
-Build a scalable analytics solution that defines and tracks **North Star metrics and core operational KPIs** across:
+Build a scalable analytics solution that defines and tracks **North Star metrics and core operational KPIs** across the full value chain:
 
 **Patient Utilization → Clinical Operations → Revenue Cycle → Financial Performance**
 
 ---
+
+## 🏗 Architecture
+
 ```mermaid
 flowchart TB
-    %% Custom Styling for Large, Readable Text
     classDef raw fill:#161b22,stroke:#58a6ff,stroke-width:3px,color:#fff,font-size:16px,font-weight:bold
     classDef pq fill:#161b22,stroke:#217346,stroke-width:3px,color:#fff,font-size:16px,font-weight:bold
     classDef sql fill:#161b22,stroke:#cc2927,stroke-width:3px,color:#fff,font-size:16px,font-weight:bold
@@ -40,20 +64,112 @@ flowchart TB
     classDef pbi fill:#161b22,stroke:#f2c811,stroke-width:3px,color:#fff,font-size:16px,font-weight:bold
     classDef dash fill:#161b22,stroke:#a371f7,stroke-width:3px,color:#fff,font-size:18px,font-weight:bold
 
-    %% Nodes and Flow
     A["📁 Raw Synthea CSVs"]:::raw ==>|"Extract & Clean"| B["Power Query"]:::pq
-    
     B ==>|"Load Base Tables"| C[("SQL Server Database<br/>(HealthcareAnalytics_Numeric)")]:::sql
-    
-    C ==>|"Financial Logic"| D1[" dbo.vw_ClaimsSummary"]:::view
-    C ==>|"Dimensional Flattening"| D2[" dbo.vw_PatientOverview"]:::view
-    C ==>|"Capacity Rollups"| D3[" dbo.vw_DepartmentalPerformance"]:::view
-    
-    D1 ==>|"Import Mode"| E[" Power BI Semantic Model<br/>(Star Schema & DAX Measures)"]:::pbi
+    C ==>|"Financial Logic"| D1["dbo.vw_ClaimsSummary"]:::view
+    C ==>|"Dimensional Flattening"| D2["dbo.vw_PatientOverview"]:::view
+    C ==>|"Capacity Rollups"| D3["dbo.vw_DepartmentalPerformance"]:::view
+    D1 ==>|"Import Mode"| E["Power BI Semantic Model<br/>(Star Schema & DAX Measures)"]:::pbi
     D2 ==> E
     D3 ==> E
-    
     E ==> F["📈 Executive Dashboard"]:::dash
 
-    %% Link Styling
     linkStyle default stroke:#8b949e,stroke-width:3px,color:#c9d1d9,font-size:14px,font-weight:bold;
+```
+
+
+---
+
+## 🛠 Tech Stack
+
+| Layer | Tools |
+|---|---|
+| Data Source | Synthea synthetic patient generator (CSV) |
+| ETL / Transformation | Power Query, Python (`pandas`) |
+| Database | Microsoft SQL Server (T-SQL views, indexing) |
+| Semantic Modeling | Power BI (star schema, DAX) |
+| Visualization | Power BI Desktop / Service |
+| Version Control | Git / GitHub |
+
+## 🗃 Data Source
+
+This project uses **[Synthea](https://synthea.mitre.org/)**, an open-source synthetic patient generator developed by MITRE. All 900,000+ records are **artificially generated** — there is no real patient data (PHI) involved, which makes the dataset safe to publish and analyze publicly while still modeling realistic clinical and claims patterns (admissions, encounters, conditions, procedures, claims).
+
+## 🔍 Methodology
+
+1. **Extraction** — Raw Synthea CSVs (patients, encounters, conditions, procedures, payers, claims) ingested via Power Query.
+2. **Cleaning & Standardization** — Data typing, null handling, deduplication, and date normalization performed in Power Query / Python.
+3. **Loading** — Cleaned tables loaded into SQL Server (`HealthcareAnalytics_Numeric`).
+4. **Business Logic Layer** — T-SQL views built to encapsulate reusable logic: claims financials, patient-level rollups, and departmental capacity metrics.
+5. **Modeling** — Star schema built in Power BI with fact/dimension separation; DAX measures written for KPIs, YoY trends, and rate calculations (e.g., readmission rate, mortality rate).
+6. **Delivery** — Executive dashboard published with drill-through and filtering by department, payer, and demographic segment.
+
+---
+
+## 📊 Key KPIs Tracked
+
+| Category | Metrics |
+|---|---|
+| Patient Utilization | Admissions volume, admissions trend, demographic mix |
+| Clinical Operations | Readmission rate, mortality rate, average length of stay |
+| Revenue Cycle | Claim volume by department, unpaid balance / AR aging |
+| Financial Performance | Revenue by payer, revenue by department |
+
+---
+
+## 💡 Key Findings
+
+- **[Finding 1]** — e.g., "Readmission rates were X% higher in [department], driven primarily by [factor]."
+- **[Finding 2]** — e.g., "Unpaid balances were concentrated in [payer/department], representing $X in outstanding AR."
+- **[Finding 3]** — e.g., "Average length of stay increased X% among [demographic], correlating with [operational factor]."
+- **[Recommendation]** — What would you tell a hospital COO to do based on this?
+
+---
+
+## 🖼 Dashboard Preview
+
+```
+![Executive Overview](assets/screenshots/executive-overview.png)
+![Revenue Cycle View](assets/screenshots/revenue-cycle.png)
+```
+
+---
+
+## 📂 Repository Structure
+
+```
+├── data/
+│   └── raw/                  # Synthea source CSVs (or download instructions)
+├── sql/
+│   ├── views/                # vw_ClaimsSummary.sql, vw_PatientOverview.sql, etc.
+│   └── schema.sql
+├── etl/
+│   └── power_query_scripts/  # or python cleaning scripts
+├── powerbi/
+│   └── HealthcareAnalytics.pbix
+├── assets/
+│   └── screenshots/
+├── README.md
+└── LICENSE
+```
+
+---
+
+## 🧠 Skills Demonstrated
+
+`SQL (views, joins, aggregation)` · `Data modeling (star schema)` · `DAX` · `ETL / Power Query` · `Python (pandas)` · `Healthcare KPI design` · `Dashboard/UX design for executive audiences`
+
+## 🚀 Future Improvements
+
+- Automate the refresh pipeline (e.g., scheduled SQL Agent job or Python script)
+- Add row-level security by department/role
+- Incorporate predictive readmission risk scoring
+- Add cost-per-case analysis
+
+---
+
+## 👤 About Me
+
+**[Your Name]** — Data Analyst | [LinkedIn](#) | [Portfolio](#) | [Email](#)
+
+*If you're a recruiter reviewing this: I'm happy to walk through the SQL views, the DAX measures, or the design decisions behind this dashboard — reach out anytime.*
