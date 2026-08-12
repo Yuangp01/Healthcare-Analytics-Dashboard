@@ -12,7 +12,6 @@ An end-to-end healthcare analytics solution designed to ingest raw transactional
 
 ## 📸 Executive Dashboard Preview
 ```mermaid
-```mermaid
 flowchart LR
     A["📁 Raw Synthea<br/>(CSV Datasets)"] --> B["🐍 Python ETL Pipeline<br/>(Pandas + Chunked Batching)"]
     B --> C["🛢️ SQL Server Database<br/>(HealthcareAnalytics_Numeric)"]
