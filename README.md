@@ -131,10 +131,6 @@ This project uses **[Synthea](https://synthea.mitre.org/)**, an open-source synt
 ![Revenue Cycle View](assets/screenshots/revenue-cycle.png)
 ```
 
----
-
-## 📂 Repository Structure
-
 ```
 
 ```
