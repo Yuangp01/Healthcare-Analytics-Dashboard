@@ -1,29 +1,33 @@
 /*
-===========================================================
-Healthcare Analytics Dashboard
-SQL Server Data Model
-===========================================================
+===============================================================================
+Healthcare Analytics Dashboard - Relational Database Schema
+Database : HealthcareAnalytics_Numeric
+===============================================================================
 
 Purpose:
-Create the relational database structure for the cleaned
-healthcare datasets prepared with Python.
+Creates the core relational base table structure for the healthcare 
+datasets extracted and cleaned via Power Query.
 
-Source:
-Synthetic healthcare data cleaned and validated with Python.
+Base Tables:
+1. dbo.Patients   (Demographic dimension)
+2. dbo.Encounters (Hospital visits & stay fact table)
+3. dbo.Conditions (Diagnoses & active conditions dimension)
+4. dbo.Procedures (Clinical procedures & treatments fact table)
+5. dbo.Claims     (Financial billing & revenue cycle fact table)
 
-Tables:
-1. PATIENTS
-2. ORGANIZATIONS
-3. PROVIDERS
-4. PAYERS
-5. ENCOUNTERS
-6. CONDITIONS
-7. PROCEDURES
-8. CLAIMS
-9. CLAIMS_TRANSACTIONS
-
-===========================================================
+===============================================================================
 */
+
+USE HealthcareAnalytics_Numeric;
+GO
+
+-- Drop tables in reverse dependency order if re-initializing
+IF OBJECT_ID('dbo.Claims', 'U') IS NOT NULL DROP TABLE dbo.Claims;
+IF OBJECT_ID('dbo.Procedures', 'U') IS NOT NULL DROP TABLE dbo.Procedures;
+IF OBJECT_ID('dbo.Conditions', 'U') IS NOT NULL DROP TABLE dbo.Conditions;
+IF OBJECT_ID('dbo.Encounters', 'U') IS NOT NULL DROP TABLE dbo.Encounters;
+IF OBJECT_ID('dbo.Patients', 'U') IS NOT NULL DROP TABLE dbo.Patients;
+GO
 
 -- =========================================================
 -- 1. PATIENTS
@@ -41,8 +45,8 @@ CREATE TABLE dbo.Patients
     CITY VARCHAR(100) NOT NULL,
     STATE VARCHAR(50) NOT NULL,
     COUNTY VARCHAR(100) NOT NULL,
-    FIPS VARCHAR(10) NULL,               -- identifier, not a numeric quantity
-    ZIP VARCHAR(10) NOT NULL,            -- preserves leading zeros (e.g. Northeast zips)
+    FIPS VARCHAR(10) NULL,               -- Identifier, preserves formatting
+    ZIP VARCHAR(10) NOT NULL,            -- Preserves leading zeros
     LON DECIMAL(10,6) NOT NULL,
     HEALTHCARE_EXPENSES DECIMAL(18,2) NOT NULL,
     HEALTHCARE_COVERAGE DECIMAL(18,2) NOT NULL,
@@ -54,96 +58,10 @@ CREATE TABLE dbo.Patients
     CONSTRAINT PK_Patients
         PRIMARY KEY (Id)
 );
-
-
--- =========================================================
--- 2. ORGANIZATIONS
--- =========================================================
-
-CREATE TABLE dbo.Organizations
-(
-    Id VARCHAR(100) NOT NULL,
-    NAME VARCHAR(255) NOT NULL,
-    ADDRESS VARCHAR(255) NOT NULL,
-    CITY VARCHAR(100) NOT NULL,
-    STATE VARCHAR(50) NOT NULL,
-    ZIP VARCHAR(10) NOT NULL,
-    LAT DECIMAL(10,6) NOT NULL,
-    LON DECIMAL(10,6) NOT NULL,
-    PHONE VARCHAR(50) NOT NULL,
-    REVENUE DECIMAL(18,2) NOT NULL,
-    UTILIZATION INT NOT NULL,
-
-    CONSTRAINT PK_Organizations
-        PRIMARY KEY (Id)
-);
-
+GO
 
 -- =========================================================
--- 3. PROVIDERS
--- =========================================================
-
-CREATE TABLE dbo.Providers
-(
-    Id VARCHAR(100) NOT NULL,
-    ORGANIZATION VARCHAR(100) NOT NULL,
-    NAME VARCHAR(255) NOT NULL,
-    GENDER VARCHAR(20) NOT NULL,
-    SPECIALITY VARCHAR(150) NOT NULL,
-    ADDRESS VARCHAR(255) NOT NULL,
-    CITY VARCHAR(100) NOT NULL,
-    STATE VARCHAR(50) NOT NULL,
-    ZIP VARCHAR(10) NOT NULL,
-    LAT DECIMAL(10,6) NOT NULL,
-    LON DECIMAL(10,6) NOT NULL,
-    ENCOUNTERS INT NOT NULL,
-    PROCEDURES INT NOT NULL,
-
-    CONSTRAINT PK_Providers
-        PRIMARY KEY (Id),
-
-    CONSTRAINT FK_Providers_Organizations
-        FOREIGN KEY (ORGANIZATION)
-        REFERENCES dbo.Organizations(Id)
-);
-
-
--- =========================================================
--- 4. PAYERS
--- =========================================================
-
-CREATE TABLE dbo.Payers
-(
-    Id VARCHAR(100) NOT NULL,
-    NAME VARCHAR(255) NOT NULL,
-    OWNERSHIP VARCHAR(100) NOT NULL,
-    ADDRESS VARCHAR(255) NULL,
-    CITY VARCHAR(100) NULL,
-    STATE_HEADQUARTERED VARCHAR(50) NULL,
-    ZIP VARCHAR(20) NULL,
-    PHONE VARCHAR(50) NULL,
-    AMOUNT_COVERED DECIMAL(18,2) NOT NULL,
-    AMOUNT_UNCOVERED DECIMAL(18,2) NOT NULL,
-    REVENUE DECIMAL(18,2) NOT NULL,
-    COVERED_ENCOUNTERS INT NOT NULL,
-    UNCOVERED_ENCOUNTERS INT NOT NULL,
-    COVERED_MEDICATIONS INT NOT NULL,
-    UNCOVERED_MEDICATIONS INT NOT NULL,
-    COVERED_PROCEDURES INT NOT NULL,
-    UNCOVERED_PROCEDURES INT NOT NULL,
-    COVERED_IMMUNIZATIONS INT NOT NULL,
-    UNCOVERED_IMMUNIZATIONS INT NOT NULL,
-    UNIQUE_CUSTOMERS INT NOT NULL,
-    QOLS_AVG DECIMAL(10,4) NOT NULL,
-    MEMBER_MONTHS INT NOT NULL,
-
-    CONSTRAINT PK_Payers
-        PRIMARY KEY (Id)
-);
-
-
--- =========================================================
--- 5. ENCOUNTERS
+-- 2. ENCOUNTERS
 -- =========================================================
 
 CREATE TABLE dbo.Encounters
@@ -161,7 +79,7 @@ CREATE TABLE dbo.Encounters
     BASE_ENCOUNTER_COST DECIMAL(18,2) NOT NULL,
     TOTAL_CLAIM_COST DECIMAL(18,2) NOT NULL,
     PAYER_COVERAGE DECIMAL(18,2) NOT NULL,
-    REASONCODE INT NULL,                 -- reference code, not a currency/decimal value
+    REASONCODE INT NULL,                  -- Reference code
     REASONDESCRIPTION VARCHAR(500) NULL,
     EncounterDurationHours DECIMAL(10,4) NOT NULL,
 
@@ -170,24 +88,12 @@ CREATE TABLE dbo.Encounters
 
     CONSTRAINT FK_Encounters_Patients
         FOREIGN KEY (PATIENT)
-        REFERENCES dbo.Patients(Id),
-
-    CONSTRAINT FK_Encounters_Organizations
-        FOREIGN KEY (ORGANIZATION)
-        REFERENCES dbo.Organizations(Id),
-
-    CONSTRAINT FK_Encounters_Providers
-        FOREIGN KEY (PROVIDER)
-        REFERENCES dbo.Providers(Id),
-
-    CONSTRAINT FK_Encounters_Payers
-        FOREIGN KEY (PAYER)
-        REFERENCES dbo.Payers(Id)
+        REFERENCES dbo.Patients(Id)
 );
-
+GO
 
 -- =========================================================
--- 6. CONDITIONS
+-- 3. CONDITIONS
 -- =========================================================
 
 CREATE TABLE dbo.Conditions
@@ -211,10 +117,10 @@ CREATE TABLE dbo.Conditions
         FOREIGN KEY (ENCOUNTER)
         REFERENCES dbo.Encounters(Id)
 );
-
+GO
 
 -- =========================================================
--- 7. PROCEDURES
+-- 4. PROCEDURES
 -- =========================================================
 
 CREATE TABLE dbo.Procedures
@@ -227,7 +133,7 @@ CREATE TABLE dbo.Procedures
     CODE INT NOT NULL,
     DESCRIPTION VARCHAR(500) NOT NULL,
     BASE_COST DECIMAL(18,2) NOT NULL,
-    REASONCODE INT NULL,                 -- reference code, not a currency/decimal value
+    REASONCODE INT NULL,                  -- Reference code
     REASONDESCRIPTION VARCHAR(500) NULL,
     ProcedureDurationHours DECIMAL(10,4) NOT NULL,
 
@@ -239,10 +145,10 @@ CREATE TABLE dbo.Procedures
         FOREIGN KEY (ENCOUNTER)
         REFERENCES dbo.Encounters(Id)
 );
-
+GO
 
 -- =========================================================
--- 8. CLAIMS
+-- 5. CLAIMS
 -- =========================================================
 
 CREATE TABLE dbo.Claims
@@ -255,7 +161,7 @@ CREATE TABLE dbo.Claims
     DEPARTMENTID INT NOT NULL,
     PATIENTDEPARTMENTID INT NOT NULL,
     DIAGNOSIS1 INT NOT NULL,
-    DIAGNOSIS2 INT NULL,                 -- reference code, not a currency/decimal value
+    DIAGNOSIS2 INT NULL,
     DIAGNOSIS3 INT NULL,
     DIAGNOSIS4 INT NULL,
     DIAGNOSIS5 INT NULL,
@@ -289,75 +195,6 @@ CREATE TABLE dbo.Claims
 
     CONSTRAINT FK_Claims_Patients
         FOREIGN KEY (PATIENTID)
-        REFERENCES dbo.Patients(Id),
-
-    CONSTRAINT FK_Claims_Providers
-        FOREIGN KEY (PROVIDERID)
-        REFERENCES dbo.Providers(Id)
+        REFERENCES dbo.Patients(Id)
 );
-
-
--- =========================================================
--- 9. CLAIMS TRANSACTIONS
--- =========================================================
-
-CREATE TABLE dbo.Claims_Transactions
-(
-    ID VARCHAR(100) NOT NULL,
-    CLAIMID VARCHAR(100) NOT NULL,
-    CHARGEID INT NOT NULL,
-    PATIENTID VARCHAR(100) NOT NULL,
-    TYPE VARCHAR(100) NOT NULL,
-    AMOUNT DECIMAL(18,2) NOT NULL,
-    METHOD VARCHAR(100) NULL,
-    FROMDATE DATE NOT NULL,
-    TODATE DATE NOT NULL,
-    PLACEOFSERVICE VARCHAR(100) NOT NULL,
-    PROCEDURECODE INT NOT NULL,
-    MODIFIER1 VARCHAR(50) NULL,          -- reference code, not a currency/decimal value
-    MODIFIER2 VARCHAR(50) NULL,
-    DIAGNOSISREF1 INT NOT NULL,
-    DIAGNOSISREF2 INT NULL,
-    DIAGNOSISREF3 INT NULL,
-    DIAGNOSISREF4 INT NULL,
-    UNITS INT NOT NULL,
-    DEPARTMENTID INT NOT NULL,
-    NOTES VARCHAR(1000) NOT NULL,
-    UNITAMOUNT DECIMAL(18,2) NOT NULL,
-    TRANSFEROUTID VARCHAR(100) NULL,     -- identifier, not a currency/decimal value
-    TRANSFERTYPE VARCHAR(100) NULL,
-    PAYMENTS DECIMAL(18,2) NOT NULL,
-    ADJUSTMENTS DECIMAL(18,2) NOT NULL,
-    TRANSFERS DECIMAL(18,2) NOT NULL,
-    OUTSTANDING DECIMAL(18,2) NOT NULL,
-    APPOINTMENTID VARCHAR(100) NOT NULL,
-    LINENOTE VARCHAR(1000) NULL,
-    PATIENTINSURANCEID VARCHAR(100) NULL,
-    FEESCHEDULEID INT NOT NULL,
-    PROVIDERID VARCHAR(100) NOT NULL,
-    SUPERVISINGPROVIDERID VARCHAR(100) NOT NULL,
-    TransactionCategory VARCHAR(100) NOT NULL,
-    FinancialFlow VARCHAR(100) NOT NULL,
-    ChargeAmount DECIMAL(18,2) NOT NULL,
-    PaymentAmount DECIMAL(18,2) NOT NULL,
-    TransferAmount DECIMAL(18,2) NOT NULL,
-    OutstandingAmount DECIMAL(18,2) NOT NULL,
-    TransferInAmount DECIMAL(18,2) NOT NULL,
-    TransferOutAmount DECIMAL(18,2) NOT NULL,
-    NetTransferAmount DECIMAL(18,2) NOT NULL,
-
-    CONSTRAINT PK_Claims_Transactions
-        PRIMARY KEY (ID),
-
-    CONSTRAINT FK_Claims_Transactions_Claims
-        FOREIGN KEY (CLAIMID)
-        REFERENCES dbo.Claims(Id),
-
-    CONSTRAINT FK_Claims_Transactions_Patients
-        FOREIGN KEY (PATIENTID)
-        REFERENCES dbo.Patients(Id),
-
-    CONSTRAINT FK_Claims_Transactions_Providers
-        FOREIGN KEY (PROVIDERID)
-        REFERENCES dbo.Providers(Id)
-);
+GO
