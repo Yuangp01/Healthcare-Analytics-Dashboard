@@ -105,17 +105,14 @@ Database: **`HealthcareAnalytics_Numeric`**
 
 ---
 
-## 🗄️ SQL Presentation Layer (Analytical Views)
+## 🗄️ SQL Analytical & Presentation Layer
 
-Rather than connecting Power BI directly to high-volume transactional tables, **3 SQL Analytical Views** were constructed directly inside SQL Server. This reduces memory overhead in Power BI and centralizes business logic within the database.
+To optimize reporting performance and decouple business logic from the visual layer, **3 custom SQL Views** were engineered in SQL Server (`HealthcareAnalytics_Numeric`). 
 
-```sql
--- View Architecture Overview
-├── dbo.vw_ClaimsSummary             --> Formats billing statuses & calculates outstanding vs settled balances
-├── dbo.vw_PatientOverview           --> Joins Patients + Encounters + Conditions into 1 row per patient with age groups
-└── dbo.vw_DepartmentalPerformance  --> Aggregates monthly claim counts, unique patient counts, & outstanding balances
+This presentation layer pre-aggregates heavy multi-table joins and isolates key financial logic directly on the database engine, serving high-performance, flat tables directly to Power BI.
 
-
----
-
-## 🏗️ Architecture & Data Pipeline Flow
+| View Name | Underlying Source Tables | Core Business Logic & Transformations | Primary Analytics Use Case |
+| :--- | :--- | :--- | :--- |
+| **`dbo.vw_ClaimsSummary`** | `dbo.Claims` | • Formats claim service dates and insurance IDs<br/>• Categorizes balances into `'Outstanding'` vs `'Fully Paid / Settled'`<br/>• Normalizes primary and secondary payment status codes | Claims Financial Breakdown & Settlement Rates |
+| **`dbo.vw_PatientOverview`** | `dbo.Patients`<br/>`dbo.Encounters`<br/>`dbo.Conditions` | • Executes `LEFT JOIN` aggregations across 3 tables<br/>• Dynamically computes patient age using `DATEDIFF`<br/>• Generates age buckets (`Under 18`, `18-34`, `35-50`, `51-65`, `65+`)<br/>• Calculates total encounter and condition counts per patient | Patient Demographics & Utilization Profiling |
+| **`dbo.vw_DepartmentalPerformance`** | `dbo.Claims` | • `GROUP BY` rollups across `DepartmentID`, `ServiceYear`, and `ServiceMonth`<br/>• Aggregates total claims volume and unique patients served<br/>• Computes monthly departmental outstanding balances | Departmental Capacity & Revenue Cycle Tracking |
