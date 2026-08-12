@@ -5,7 +5,6 @@
 [![Power Query](https://img.shields.io/badge/Power%20Query-ETL-217346?logo=microsoft&logoColor=white)](https://learn.microsoft.com/power-query/)
 [![Power BI](https://img.shields.io/badge/Power%20BI-Analytics-F2C811?logo=powerbi&logoColor=black)](https://powerbi.microsoft.com/)
 [![DAX](https://img.shields.io/badge/DAX-Data%20Modeling-blue)](https://learn.microsoft.com/dax/)
-[![License](https://img.shields.io/badge/License-MIT-lightgrey)](LICENSE)
 
 > **Transforming 900,000+ synthetic patient records into an executive dashboard that tracks clinical capacity and revenue cycle KPIs — built on a SQL Server presentation layer and a Power BI semantic model.**
 
