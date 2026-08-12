@@ -40,7 +40,7 @@ flowchart TB
     classDef dash fill:#161b22,stroke:#a371f7,stroke-width:3px,color:#fff,font-size:18px,font-weight:bold
 
     %% Nodes and Flow
-    A["📁 Raw Synthea CSVs"]:::raw ==>|"Extract & Clean"| B["⚡ Power Query"]:::pq
+    A["📁 Raw Synthea CSVs"]:::raw ==>|"Extract & Clean"| B["Power Query"]:::pq
     
     B ==>|"Load Base Tables"| C[("SQL Server Database<br/>(HealthcareAnalytics_Numeric)")]:::sql
     
