@@ -12,36 +12,29 @@ An end-to-end healthcare analytics solution designed to ingest raw transactional
 
 ## 📸 Executive Dashboard Preview
 ```mermaid
-graph LR
-    %% Subgraphs for System Architecture
-    subgraph Data_Ingestion [" 📥 INGESTION & TRANSFORMATION "]
-        A["<b>📁 Raw Synthea Data</b><br/><i>Synthea CSV Exports</i>"] 
-        B["<b>🐍 Python ETL Pipeline</b><br/><i>Pandas • Cleaning & Validation</i>"]
-    end
+flowchart LR
+    %% Custom Font and Node Styling
+    classDef largeNode fill:#161b22,stroke:#58a6ff,stroke-width:3px,color:#ffffff,font-size:16px,font-weight:bold;
+    classDef pythonNode fill:#161b22,stroke:#3fb950,stroke-width:3px,color:#ffffff,font-size:16px,font-weight:bold;
+    classDef sqlNode fill:#161b22,stroke:#f85149,stroke-width:3px,color:#ffffff,font-size:16px,font-weight:bold;
+    classDef viewNode fill:#161b22,stroke:#d29922,stroke-width:3px,color:#ffffff,font-size:16px,font-weight:bold;
+    classDef pbiNode fill:#161b22,stroke:#a371f7,stroke-width:3px,color:#ffffff,font-size:16px,font-weight:bold;
 
-    subgraph Data_Platform [" 🛢️ WAREHOUSING & ANALYTICS "]
-        C["<b>💾 SQL Server Database</b><br/><i>HealthcareAnalytics_Numeric</i>"]
-        D["<b>👁️ SQL Analytical Views</b><br/><i>vw_Claims • vw_Patient • vw_Dept</i>"]
-        E["<b>📊 Power BI Executive Dashboard</b><br/><i>Star Schema Model & DAX Metrics</i>"]
-    end
+    %% Nodes
+    A["📁 Raw Synthea Data<br/>(CSV Datasets)"]:::largeNode
+    B["🐍 Python ETL Pipeline<br/>(Pandas Data Cleaning)"]:::pythonNode
+    C["🛢️ SQL Server Database<br/>(HealthcareAnalytics_Numeric)"]:::sqlNode
+    D["👁️ SQL Analytical Views<br/>(vw_Claims, vw_Patient, vw_Dept)"]:::viewNode
+    E["📊 Power BI Dashboard<br/>(Star Schema & DAX)"]:::pbiNode
 
-    %% Flow Connections with Annotations
-    A -->|" Extract Raw CSVs "| B
-    B -->|" PyODBC Bulk Batching<br/>(50k rows/batch) "| C
-    C -->|" SQL Transformations<br/>& Business Logic "| D
-    D -->|" Import Mode<br/>(Native SQL Views) "| E
+    %% Links
+    A ==>|" Extract "| B
+    B ==>|" PyODBC Batching "| C
+    C ==>|" Transform "| D
+    D ==>|" Direct Import "| E
 
-    %% Custom Styling
-    style Data_Ingestion fill:#0d1117,stroke:#30363d,stroke-width:1px,color:#8b949e
-    style Data_Platform fill:#0d1117,stroke:#30363d,stroke-width:1px,color:#8b949e
-
-    style A fill:#161b22,stroke:#58a6ff,stroke-width:2px,color:#f0f6fc,rx:6px,ry:6px
-    style B fill:#161b22,stroke:#3fb950,stroke-width:2px,color:#f0f6fc,rx:6px,ry:6px
-    style C fill:#161b22,stroke:#f85149,stroke-width:2px,color:#f0f6fc,rx:6px,ry:6px
-    style D fill:#161b22,stroke:#d29922,stroke-width:2px,color:#f0f6fc,rx:6px,ry:6px
-    style E fill:#161b22,stroke:#a371f7,stroke-width:2px,color:#f0f6fc,rx:6px,ry:6px
-
-    linkStyle default stroke:#8b949e,stroke-width:1.5px,color:#8b949e
+    %% Link Styling
+    linkStyle default stroke:#58a6ff,stroke-width:3px,color:#f0f6fc,font-size:14px;
 ```
 
 
