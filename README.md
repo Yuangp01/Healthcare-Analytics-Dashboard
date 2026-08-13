@@ -12,19 +12,6 @@
 
 ---
 
-## 🔍 Quick Navigation
-
-> #### 📌 **Overview**
-> [Business Problem](#-business-problem) • [Project Objective](#-project-objective) • [Architecture](#-architecture)
-
-> #### ⚙️ **Technical Build**
-> [Tech Stack](#-tech-stack) • [Data Source](#-data-source) • [Methodology](#-methodology)
-
-> #### 📈 **Results & Insights**
-> [Key KPIs Tracked](#-key-kpis-tracked) • [Key Findings](#-key-findings) • [Dashboard Preview](#-dashboard-preview)
-
----
-
 ## 📌 Business Problem
 
 Healthcare leaders sit on enormous volumes of clinical and financial data, but rarely have a single, governed source of truth to answer basic operational questions in real time. This project simulates the analytics function of a hospital system, built around the questions executives actually ask:
