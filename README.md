@@ -60,21 +60,6 @@ flowchart TB
     linkStyle default stroke:#8b949e,stroke-width:3px,color:#c9d1d9,font-size:14px,font-weight:bold;
 ```
 
----
-
-## 🛠 Tech Stack
-
-| Layer | Tools |
-|---|---|
-| Data Source | Synthea synthetic patient generator (CSV) |
-| ETL / Transformation | Power Query, Python (`pandas`) |
-| Database | Microsoft SQL Server (T-SQL views, indexing) |
-| Semantic Modeling | Power BI (star schema, DAX) |
-| Visualization | Power BI Desktop / Service |
-| Version Control | Git / GitHub |
-
----
-
 ## 🗃 Data Source
 
 This project uses **[Synthea](https://synthea.mitre.org/)**, an open-source synthetic patient generator developed by MITRE. All 900,000+ records are **artificially generated** — there is no real patient data (PHI) involved, which makes the dataset safe to publish and analyze publicly while still modeling realistic clinical and claims patterns (admissions, encounters, conditions, procedures, claims).
