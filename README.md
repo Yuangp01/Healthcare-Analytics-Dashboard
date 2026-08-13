@@ -8,7 +8,7 @@
 
 > **Transforming 900,000+ synthetic patient records into an executive dashboard that tracks clinical capacity and revenue cycle KPIs — built on a SQL Server presentation layer and a Power BI semantic model.**
 
-**[▶ Live Dashboard](#)** &nbsp;·&nbsp; **[📄 Full Case Study / Portfolio Write-up](#)** &nbsp;·&nbsp; **[📊 Sample Screenshots](#dashboard-preview)**
+**[▶ Live Dashboard](#)** &nbsp;·&nbsp; **[📊 Sample Screenshots](#dashboard-preview)**
 
 ---
 
