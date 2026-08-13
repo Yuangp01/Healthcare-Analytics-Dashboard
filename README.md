@@ -101,11 +101,8 @@ This project uses **[Synthea](https://synthea.mitre.org/)**, an open-source synt
 ## 🖼 Dashboard Preview
 
 ```
-![Executive Overview](assets/screenshots/executive-overview.png)
 ![Revenue Cycle View](assets/screenshots/revenue-cycle.png)
-```
 
 ```
 
-```
 
