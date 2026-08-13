@@ -1,10 +1,10 @@
 # 🏥 Healthcare Operations Data Analytics
 
-[![Python](https://img.shields.io/badge/Python-Scripting-3776AB?logo=python&logoColor=white)](https://www.python.org/)
-[![SQL Server](https://img.shields.io/badge/SQL%20Server-Database-CC2927?logo=microsoftsqlserver&logoColor=white)](https://www.microsoft.com/sql-server)
-[![Power Query](https://img.shields.io/badge/Power%20Query-ETL-217346?logo=microsoft&logoColor=white)](https://learn.microsoft.com/power-query/)
 [![Power BI](https://img.shields.io/badge/Power%20BI-Analytics-F2C811?logo=powerbi&logoColor=black)](https://powerbi.microsoft.com/)
 [![DAX](https://img.shields.io/badge/DAX-Data%20Modeling-blue)](https://learn.microsoft.com/dax/)
+[![Power Query](https://img.shields.io/badge/Power%20Query-ETL-217346?logo=microsoft&logoColor=white)](https://learn.microsoft.com/power-query/)
+[![Python](https://img.shields.io/badge/Python-Scripting-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![SQL Server](https://img.shields.io/badge/SQL%20Server-Database-CC2927?logo=microsoftsqlserver&logoColor=white)](https://www.microsoft.com/sql-server)
 
 > **Transforming 900,000+ synthetic patient records into an executive dashboard that tracks clinical capacity and revenue cycle KPIs — built on a SQL Server presentation layer and a Power BI semantic model.**
 
