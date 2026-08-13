@@ -14,17 +14,19 @@
 
 ## 📌 Business Problem
 
-Healthcare leaders sit on enormous volumes of clinical and financial data, but rarely have a single, governed source of truth to answer basic operational questions in real time. This project simulates the analytics function of a hospital system, built around the questions executives actually ask:
+Healthcare organizations generate **terabytes of clinical and financial data annually**, yet their decision-makers work from fragmented spreadsheets and outdated reports. Hospital executives, department heads, and finance teams lack **fast, accessible analytics** to answer basic operational questions in real time.
 
-- Are patient admissions increasing or declining?
-- What is the current readmission rate?
-- How is mortality trending?
-- Which departments generate the highest claim volume?
-- Where are unpaid balances accumulating?
-- How does utilization vary across patient demographics?
-- What operational factors are associated with longer length of stay?
+**This project simulates a real analytics function** by building a governed analytics platform that bridges raw data and strategic decision-making — exactly what healthcare organizations need, and what data analysts build.
 
-The solution bridges raw clinical data and executive decision-making by combining a **SQL Server presentation layer** with a **Power BI semantic model and KPI framework** — mirroring how analytics teams operate in real healthcare organizations.
+### Stakeholder Needs & KPIs
+
+| Stakeholder | Question | Key Metric |
+|---|---|---|
+| **CFO / Finance Director** | Where is our revenue leaking? | Outstanding claims balance, aging curve, collection rate by payer |
+| **Chief Operating Officer** | Are we running efficiently? | Bed utilization by department, average length of stay, admission volume trend |
+| **Department Heads** | How's my department performing? | Patient volume, case mix (demographics), procedures performed, associated costs |
+| **Clinical Quality Lead** | What's our population health? | Readmission patterns by condition, mortality rate, high-risk patient cohorts |
+| **Revenue Cycle Manager** | Which claims are at risk? | Days outstanding by status, aging analysis, payer-mix breakdown |
 
 ---
 
