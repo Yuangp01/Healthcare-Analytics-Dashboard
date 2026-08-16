@@ -19,6 +19,8 @@ transactions — through a consistent **load → profile → clean → validate 
 process, then applies a single consistent reporting window across every fact
 table.
 
+---
+
 ## What It Does
 
 **Dimension tables** (`patients`, `providers`, `organizations`, `payers`) are
