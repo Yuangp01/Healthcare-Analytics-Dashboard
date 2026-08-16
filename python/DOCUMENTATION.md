@@ -10,18 +10,6 @@ This notebook is step 1 of a 3-stage pipeline: **Python (this repo) → SQL Serv
 
 ---
 
-## 📌 Quick Navigation
-
-**Pipeline**
-[Overview](#overview) · [What It Does](#what-it-does) · [Design Decisions](#-design-decisions)
-
-**Reference**
-[Output](#output) · [Repository Structure](#-repository-structure) · [Tech Stack](#tech-stack)
-
-**Getting Started**
-[Setup](#setup) · [Data Source](#data-source)
-
----
 
 ## Overview
 
