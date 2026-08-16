@@ -75,4 +75,3 @@ Running the notebook top to bottom produces, in `data/processed/`:
 
 These files feed the [SQL Data Warehouse](../sql-warehouse) load scripts.
 
-## 📂 Repository Structure
